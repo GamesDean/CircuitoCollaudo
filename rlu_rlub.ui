@@ -17,37 +17,40 @@
    <widget class="QSpinBox" name="spinBox">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>470</y>
+      <x>561</x>
+      <y>390</y>
       <width>111</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
     </property>
     <property name="maximum">
      <number>2000</number>
     </property>
     <property name="singleStep">
-     <number>10</number>
+     <number>1</number>
     </property>
    </widget>
    <widget class="QLabel" name="label_oggetti">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>460</y>
-      <width>221</width>
+      <x>225</x>
+      <y>380</y>
+      <width>251</width>
       <height>51</height>
      </rect>
     </property>
     <property name="text">
-     <string>Seleziona la quantità oggetti da collaudare :</string>
+     <string>Selezionare la quantità di oggetti da collaudare :</string>
     </property>
    </widget>
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>140</y>
+      <x>521</x>
+      <y>20</y>
       <width>181</width>
       <height>31</height>
      </rect>
@@ -57,20 +60,23 @@
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>120</y>
-      <width>231</width>
+      <y>0</y>
+      <width>251</width>
       <height>71</height>
      </rect>
     </property>
     <property name="text">
-     <string>Seleziona la tipologia di oggetti da collaudare : </string>
+     <string>Selezionare  la tipologia di oggetti da collaudare : </string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>740</y>
+      <x>536</x>
+      <y>790</y>
       <width>181</width>
       <height>91</height>
      </rect>
@@ -79,6 +85,575 @@
      <string>OK</string>
     </property>
    </widget>
+   <widget class="QComboBox" name="comboBox_hw">
+    <property name="geometry">
+     <rect>
+      <x>521</x>
+      <y>140</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>231</x>
+      <y>120</y>
+      <width>211</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Selezionare la versione dell'  HW : </string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox_pc">
+    <property name="geometry">
+     <rect>
+      <x>521</x>
+      <y>280</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>270</y>
+      <width>231</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Selezionare il sito di produzione e  collaudo : </string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_zebra">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>464</y>
+      <width>1231</width>
+      <height>261</height>
+     </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ToolTipText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ToolTipText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>127</red>
+          <green>127</green>
+          <blue>127</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ToolTipText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+      <underline>false</underline>
+     </font>
+    </property>
+    <property name="title">
+     <string>Zebra printer setup</string>
+    </property>
+    <widget class="QLineEdit" name="lineEdit_z_success">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>990</x>
+       <y>84</y>
+       <width>211</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Button_z">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>900</x>
+       <y>194</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>OK</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_z_success">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>84</y>
+       <width>281</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>127</red>
+           <green>127</green>
+           <blue>127</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+     <property name="text">
+      <string>Inserire indirizzo IP della stampante per SUCCESS :</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_z_fail">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>990</x>
+       <y>146</y>
+       <width>211</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>IBeamCursor</cursorShape>
+     </property>
+     <property name="readOnly">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="listWidget_2">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>650</x>
+       <y>34</y>
+       <width>571</width>
+       <height>201</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox_z_success">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>94</y>
+       <width>151</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_z_success_usb">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>94</y>
+       <width>281</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>127</red>
+           <green>127</green>
+           <blue>127</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+     <property name="text">
+      <string>Seleziona la stampante  per SUCCESS :</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox">
+     <property name="geometry">
+      <rect>
+       <x>660</x>
+       <y>49</y>
+       <width>151</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Utilizzare stampante in rete</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox_z_fail">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>154</y>
+       <width>151</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_z_fail">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>146</y>
+       <width>281</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>127</red>
+           <green>127</green>
+           <blue>127</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+     <property name="text">
+      <string> Inserire indirizzo IP della stampante   per FAIL :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_z_fail_usb">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>154</y>
+       <width>281</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>127</red>
+           <green>127</green>
+           <blue>127</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+     <property name="text">
+      <string>Seleziona la stampante  per FAIL :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_ip_ok">
+     <property name="geometry">
+      <rect>
+       <x>990</x>
+       <y>61</y>
+       <width>171</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_ip_ko">
+     <property name="geometry">
+      <rect>
+       <x>991</x>
+       <y>111</y>
+       <width>171</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox_2">
+     <property name="geometry">
+      <rect>
+       <x>660</x>
+       <y>118</y>
+       <width>161</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Utilizzare stampante in rete</string>
+     </property>
+    </widget>
+    <zorder>listWidget_2</zorder>
+    <zorder>lineEdit_z_success</zorder>
+    <zorder>Button_z</zorder>
+    <zorder>label_z_success</zorder>
+    <zorder>lineEdit_z_fail</zorder>
+    <zorder>comboBox_z_success</zorder>
+    <zorder>label_z_success_usb</zorder>
+    <zorder>checkBox</zorder>
+    <zorder>comboBox_z_fail</zorder>
+    <zorder>label_z_fail</zorder>
+    <zorder>label_z_fail_usb</zorder>
+    <zorder>label_ip_ok</zorder>
+    <zorder>label_ip_ko</zorder>
+    <zorder>checkBox_2</zorder>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>792</x>
+      <y>51</y>
+      <width>201</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Inserire  il Serial Number dell'oggetto : </string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_sn">
+    <property name="geometry">
+     <rect>
+      <x>1080</x>
+      <y>63</y>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Button_sn">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>980</x>
+      <y>120</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>OK</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget_3">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>20</y>
+      <width>471</width>
+      <height>141</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_sn">
+    <property name="geometry">
+     <rect>
+      <x>1081</x>
+      <y>40</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <zorder>listWidget_3</zorder>
+   <zorder>spinBox</zorder>
+   <zorder>label_oggetti</zorder>
+   <zorder>comboBox</zorder>
+   <zorder>label</zorder>
+   <zorder>pushButton</zorder>
+   <zorder>comboBox_hw</zorder>
+   <zorder>label_2</zorder>
+   <zorder>comboBox_pc</zorder>
+   <zorder>label_3</zorder>
+   <zorder>groupBox_zebra</zorder>
+   <zorder>label_4</zorder>
+   <zorder>lineEdit_sn</zorder>
+   <zorder>Button_sn</zorder>
+   <zorder>label_sn</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
