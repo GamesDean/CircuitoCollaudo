@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import yagmail
+import ftplib
 import sys
+import urllib2
 import os
 import crcmod
 import sqlite3  
@@ -13,7 +16,7 @@ import datetime
 from IPy import IP
 # librerie creazione data-matrix
 from pylibdmtx.pylibdmtx import encode
-from PIL import Image
+
 
 #librerie stampa etichette
 from PIL import Image
@@ -21,7 +24,7 @@ import zpl
 import requests
 import win32print
 
-
+import sys
 from PyQt4 import QtCore, QtGui, uic 
 from PyQt4.QtGui import QFileDialog, QApplication, QMainWindow, QPushButton, QWidget, QMessageBox
 
@@ -93,23 +96,36 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
             pass
       return result
    
-   
-
+    
+   #abilita disabilita i pulsanti della casella relativa all'eliminazione di un device collaudato
+    def toggleGroupBox_success(self,state):
+       if state > 0:
+         self.label_4.setEnabled(True)
+         self.Button_sn.setEnabled(True)
+         self.lineEdit_sn.setEnabled(True)
+         self.listWidget_3.setEnabled(True)
+         
+       else:
+         
+         self.label_4.setEnabled(False)
+         self.Button_sn.setEnabled(False)
+         self.lineEdit_sn.setEnabled(False)
+         self.listWidget_3.setEnabled(False)
+	
+    #elimina dal DB il device già collaudato e corrispondente al seriale inserito	
+    def deleteWrongRLU(self) :
+        
+        sn=self.lineEdit_sn.text()
+        self.deleteFromRlu_sngpt(sn)
+        self.label_delete.setStyleSheet("color:green")
+        self.label_delete.setText("operazione completata")
+        self.lineEdit_sn.setText("")
+		
+		
     """Costruttore, qui referenzio i widget e gestisco il flusso di lavoro mediante gli eventi
 	     @Param : tipo di device : RLU/RLU_B - quantità : 0-n - eventuale ID del device da ricollaudare - nack collaudo precedente. Se non presenti vengono passati valori nulli  """
     def __init__(self, rlu_type, numDevice, id_retry, nack, hw_version,pc_version,printer_s,printer_f,online_printer_success,online_printer_fail,serialNumberGPT):
-        #elementi che recupero dall'altra classe e lo passo anche qui sopra alla funzione init : TODO delete
-        print "combo_box_main  item :  "+str(rlu_type)
-        print "num device :  "+str(numDevice)
-        print "id_retry :" +str(id_retry)
-        print "hw_version :" +str(hw_version)
-        print "pc_version :" +str(pc_version)
-        print "online_printer_success :" +str(online_printer_success)
-        print "online_printer_fail :" +str(online_printer_fail)
-        print "printer_s :" +str(printer_s)
-        print "printer_f :" +str(printer_f)
-        print "SN_GPT :" +str(serialNumberGPT)
-        print sys.path[0]
+        
         
         
 		
@@ -170,6 +186,10 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         #pulsante canc svuota path
         self.buttonBox_2.rejected.connect(self.wrong_file_fw)
        
+	     #al click sulla checkbox "problemi con la stampa?" abilita gli elementi della casella sottostante
+        self.checkBox.stateChanged.connect(self.toggleGroupBox_success)
+        #elimina dal DB la riga corrispondente al seriale inserito 
+        self.Button_sn.clicked.connect(self.deleteWrongRLU)
 		
 		  #se è stato selezionato RLU il collaudo è completo, altrimenti con RLU_B non testo irda2 e misura corrente
         
@@ -259,6 +279,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 		
     """Istanzia un popup da mostrare a video, customizzabile con messaggi specifici
 	     @Param : testo e titolo del messaggio da mostrare -  riepilogo ovvero query dal db dei nack/ack/ack_2/nack_2"""
+    @staticmethod
     def createMessageBox(self,testo,titolo,riepilogo) :
 	 
         msgBox = QMessageBox()
@@ -271,7 +292,8 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         
 
         returnValue = msgBox.exec_()
-		
+
+    	
     def createMessage(self,testo,titolo,riepilogo,cancel) :
 	 
         msgBox = QMessageBox()
@@ -282,22 +304,28 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
          msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
         else :
          msgBox.setStandardButtons(QMessageBox.Ok)
-        msgBox.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        msgBox.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding) 
         scelta = msgBox.exec_()
         return scelta
         
         
     def showDialog(self,prodCode):
+        #query_seriale = 'SELECT sn_gpt FROM RLU WHERE sn_gpt =?'
+        
         num=''
         scelta_=0
+        scelta=0
         num, ok = QtGui.QInputDialog.getText(self, 'Facere','Inserire il seriale:')
-        if ok and num !='':
-         print num
+        #serialeDB=MainWindow.select_generica(self,query_seriale,num)
+        if ok and num !='' and num:
+         
          self.matCol_label.setText(prodCode+" / "+num)
          self.update_sn_gpt(num,prodCode)
          return 0
-        elif ok and num =='' and QtGui.QInputDialog:
-         scelta_=self.createMessage("INSERIRE UN SERIALE VALIDO","ATTENZIONE",None,False)
+        elif ok and num =='' and QtGui.QInputDialog :
+         scelta_=self.createMessage("INSERIRE UN SERIALE VALIDO ed INEDITO","ATTENZIONE",None,False)
+        #elif  num == serialeDB :
+         #scelta_=self.createMessage("INSERIRE UN SERIALE VALIDO ed INEDITO","ATTENZIONE",None,False)
         if scelta_==1024 :
          self.showDialog(prodCode)
         else :
@@ -307,6 +335,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         if scelta!=1024 :
          self.showDialog(prodCode)
         else :
+         self.deleteFromRlu(prodCode) # o num?
          app = QtGui.QApplication(sys.argv)
          sys.exit(app.exec_())
 		
@@ -413,7 +442,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
        data = datetime.datetime.now()
        ora = str(data.hour)+str(data.minute)
        data_only = str(data.strftime('%d%m%y'))
-       print "ora e data : "+ora+"-"+data_only  
+        
        # ###########################################
        ts = int(time.time())
        #data_from_ts = datetime.datetime.fromtimestamp(ts)	   
@@ -473,13 +502,13 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         else :
           report = MainWindow.select_generica(self,query_retry,prodCode)
 		  #popup operazione completata
-        self.createMessageBox("operazione completata","collaudo terminato",report)
+        self.createMessageBox(self,"operazione completata","collaudo terminato",report)
         self.pushButton_home.setEnabled(True) #riabilito il pulsante
         
         #richiama funzione reset barre e label
         self.resetBarreLabel()
        else :
-        self.createMessageBox("porta COM errata o device spento o malfunzionante","selezionare un'altra porta","porta COM errata o device spento o malfunzionante")
+        self.createMessageBox(self,"porta COM errata o device spento o malfunzionante","selezionare un'altra porta","porta COM errata o device spento o malfunzionante")
         self.onOffButtons(True) #riabilito i pulsanti
 		
 		
@@ -511,8 +540,10 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         time.sleep(2)
 		
 		  #qr_code data matrix
-        query_qr = "SELECT id_radio,cod_prod,type,hw_version,fw_version,timestamp,sitoprodcol FROM RLU WHERE cod_prod = ?"
+        query_qr = "SELECT id_radio,cod_prod,type,hw_version,fw_version,timestamp,sitoprodcol,nack FROM RLU WHERE cod_prod = ?"
         data_qr=self.select_per_qr(query_qr,prodCode)
+        
+        nack_numero = self.nack_number(prodCode)
 		  #id_radio da stampare sull'etichetta
         query_id_radio = 'SELECT id_radio FROM RLU WHERE cod_prod=?'
         id_radio= MainWindow.select_generica(self,query_id_radio,prodCode)
@@ -525,16 +556,28 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         #nel caso di secondo collaudo con esito positivo aggiorno il campo ack_2 e stampo l'etichetta positiva
         if id_retry!=None and final_esito :
              self.update_table_ack_2("collaudo_ok",prodCode) # update campo ack_2 se device ricollaudato
-             self.dataMatrixGenerator(data_qr)
-             self.citymonitorDB(id_radio,key) 
+             self.dataMatrixGenerator(data_qr+"2 "+str(nack_numero))  #2 sono i tentativi essendo retry sono 2
+             try : 
+              self.citymonitorDB(id_radio,key) 
+             except Exception, e :
+              self.createMessageBox(self,"errore inserimento dati nel DB","ERRORE","device già collaudato")
+              self.deleteFromRlu(prodCode)
+              sys.exit(0)
              self.createLabel(prodCode,id_radio,printer,ip_address,printer_s,online_printer_success)
+             self.sendMail(prodCode,id_radio,"collaudo_ok")			 
              
 			 
         elif id_retry==None and final_esito :			             
              self.update_table_ack("collaudo_ok",prodCode)
-             self.dataMatrixGenerator(data_qr)
-             self.citymonitorDB(id_radio,key)
-             self.createLabel(prodCode,id_radio,printer,ip_address,printer_s,online_printer_success) 
+             self.dataMatrixGenerator(data_qr+"1") #1 sono i tentativi
+             try : 
+              self.citymonitorDB(id_radio,key) 
+             except Exception, e :
+              self.createMessageBox(self,"errore inserimento dati nel DB","ERRORE","device già collaudato")
+              self.deleteFromRlu(prodCode)
+              sys.exit(0)
+             self.createLabel(prodCode,id_radio,printer,ip_address,printer_s,online_printer_success)
+             self.sendMail(prodCode,id_radio,"collaudo_ok")			 
               
 	
     """ Triggera in sequenza le funzioni preposte al test del device RLU_B controllando l'esito di ciascuna e procedendo soltanto nel caso in cui quest'ultimo sia positivo. Non presenta test_irda e misura_corrente_ricarica"""	
@@ -562,6 +605,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 		  #qr_code data matrix
         query_qr = "SELECT id_radio,cod_prod,type,hw_version,fw_version,timestamp,sitoprodcol FROM RLU WHERE cod_prod = ?"
         
+        nack_numero = self.nack_number(prodCode)
         data_qr=self.select_per_qr(query_qr,prodCode)
 		  #id_radio da stampare sull'etichetta
         query_id_radio = 'SELECT id_radio FROM RLU WHERE cod_prod=?'
@@ -575,22 +619,43 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         #nel caso di secondo collaudo con esito positivo aggiorno il campo ack_2 e stampo l'etichetta positiva
         if id_retry!=None and final_esito :
              self.update_table_ack_2("collaudo_ok",prodCode) # update campo ack_2 se device ricollaudato
-             self.dataMatrixGenerator(data_qr)
-             self.citymonitorDB(id_radio,key) 
-             self.createLabel(prodCode,id_radio,printer_s,ip_address,online_printer_success) 
+             self.dataMatrixGenerator(data_qr+"2 "+str(nack_numero)) #2 sono i tentativi essendo retry sono 2
+             try : 
+              self.citymonitorDB(id_radio,key) 
+             except Exception, e :
+              self.createMessageBox(self,"errore inserimento dati nel DB","ERRORE","device già collaudato")
+              self.deleteFromRlu(prodCode)
+              sys.exit(0)
+             self.createLabel(prodCode,id_radio,printer_s,ip_address,online_printer_success)
+             self.sendMail(prodCode,id_radio,"collaudo_ok")			 
              
 			 
         elif id_retry==None and final_esito :			             
              self.update_table_ack("collaudo_ok",prodCode)
-             self.dataMatrixGenerator(data_qr)
-             #self.citymonitorDB(id_radio,key)	
+             self.dataMatrixGenerator(data_qr+"1") #1 sono i tentativi 
+             try : 
+              self.citymonitorDB(id_radio,key) 
+             except Exception, e :
+              self.createMessageBox(self,"errore inserimento dati nel DB","ERRORE","device già collaudato")
+              self.deleteFromRlu(prodCode)
+              sys.exit(0)
              self.createLabel(prodCode,id_radio,printer_s,ip_address,online_printer_success)
+             self.sendMail(prodCode,id_radio,"collaudo_ok")
              		 
              
-        
-
+    # prendo il nack dal DB e lo associo ad un numero che poi ritorno     
+    def nack_number(self,prodCode) :
+      query_nack = "SELECT nack FROM RLU WHERE cod_prod = ?"
+      nack= MainWindow.select_generica(self,query_nack,prodCode)
+      nack_error_list = ["comando non valido","err misura corrente","test IRDA_1 ko","test IRDA_2 ko","test IRDA_1,IRDA_2 ko","test transceiver non riuscito","test EEPROM non riuscito","test KEY non riuscito","corrente out of range","rssi out of range","errore generico"]
+      for i in xrange(len(nack_error_list)) :
+       if nack == nack_error_list[i] :
+        return i+1
    
-
+    def sendMail(self,codProd,id_radio,success_or_fail) :
+      yag = yagmail.SMTP('lv.menowattge@gmail.com', 'menowattge')
+      yag.send('controlloproduzione@menowattge.it',success_or_fail, 'collaudo effettuato :'+codProd+"-"+id_radio)	
+		
 
     #genero il ST con crc16 TODO delete ? 
     #def system_title_generator(self):
@@ -648,7 +713,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         self.rightFile_label.setText(path)
         self.lineEdit.setText(path)
         #debug
-        print path
+        
 		
     # #################################################SELEZIONE FIRMWARE############################################		
     def select_file_fw(self):
@@ -677,7 +742,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         self.rightFile_label_2.setText(path)
         self.lineEdit_2.setText(path)
         #debug
-        print path	
+        	
 		
    # ##################################################################################################################
 
@@ -787,6 +852,10 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         with conn :
             cursor = conn.cursor()
             
+            cursor.execute("""DELETE FROM Zebra""")
+            time.sleep(1)
+            cursor.execute("""INSERT INTO Zebra(IP_OK,IP_KO) VALUES('','')""")
+            time.sleep(1)
             cursor.execute("""UPDATE Zebra SET  IP_OK = ?""",(ip_okk,))
 			
     @staticmethod
@@ -799,7 +868,17 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         with conn :
             cursor = conn.cursor()
             
-            cursor.execute("""UPDATE Zebra SET  IP_KO = ?""",(ip_koo,)) 			
+            cursor.execute("""UPDATE Zebra SET  IP_KO = ?""",(ip_koo,))
+
+    def deleteFromRlu_sngpt(self,sn) :
+       sn_ = str(sn)
+        
+       conn = sqlite3.connect('Database\\rluDB.db')
+		
+       with conn :
+            cursor = conn.cursor()
+            
+            cursor.execute("""DELETE FROM RLU WHERE sn_gpt = ?""",(sn_,))
 
 
 
@@ -831,7 +910,17 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
                 for word in item :
                     item_+=str(word)+'\n'
               
-            return item_			  
+            return item_
+			
+			
+    def deleteFromRlu(self,prodCode) :
+        code = str(prodCode)
+        conn = sqlite3.connect('Database\\rluDB.db')
+		
+        with conn :
+            cursor = conn.cursor()
+            
+            cursor.execute("""DELETE from RLU WHERE cod_prod = ? """,(code,))  			
 		 
 
 
@@ -882,11 +971,13 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         #stampante online o stampante offline
         if online_printer_success :
          
-         indirizzo = 'http://'+ip_address+'/pstprnt'
+         indirizzo = 'http://'+str(ip_address)+'/pstprnt'
+         r=requests.post(indirizzo, payload)
          r=requests.post(indirizzo, payload)
         else :
-         print "printer_s : "+ printer_s
+         
          self.setqueue(str(printer_s))	   
+         self.output(payload)
          self.output(payload)
 
 		
@@ -949,12 +1040,13 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         #stampante online o stampante offline
         if online_printer_fail :
          
-         indirizzo = 'http://'+ip_address+'/pstprnt'
+         indirizzo = 'http://'+str(ip_address)+'/pstprnt'
          r=requests.post(indirizzo, payload)
         else :
          self.setqueue(str(printer_f))	   
          self.output(payload)
 
+        self.sendMail(prodCode,"","collaudo_fallito")
         
 		
     
@@ -1195,6 +1287,8 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         esito=""	
         command =""
         command_=""
+        command_r=""
+        risposta_ex=""
         barra = self.progressBar_2
         barra.reset()
         secondi = 60.0000000000
@@ -1207,7 +1301,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
          command_ = "550100"
 		 
         command = command_.decode("hex")
-        print " comando : ".join(hex(ord(n)) for n in command)
+        
         risposta = self.write_read_serial(command,secondi,barra,label,text)
         
         risposta_ex = risposta.encode("hex")
@@ -1241,7 +1335,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         else :
            if tentativi==1 :
               
-              print "retry"
+              
               esito=self.abilita_programmazione(tentativi,prodCode,rlu_type,id_retry,printer_f,online_printer_fail)
            else :
               esito=self.ack_nack(risposta,label,barra,prodCode,rlu_type,id_retry,printer_f,online_printer_fail)
@@ -1276,7 +1370,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         else :
            if tentativi==1 :
               
-              print "retry"
+              
               esito=self.disabilita_programmazione(tentativi,prodCode,rlu_type,id_retry,printer_f,online_printer_fail)
            else :
               esito=self.ack_nack(risposta,label,barra,type,id_retry,printer_f,online_printer_fail)
@@ -1309,7 +1403,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         else :
            if tentativi==1 :
               
-              print "retry"
+              
               esito=self.test_irda2(tentativi,prodCode,rlu_type,id_retry,printer_f,online_printer_fail)
               
            else :
@@ -1332,7 +1426,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         risposta_ex = risposta.encode("hex") #la funz ser.readline() torna un ASCII che riconverto in hex
         key = risposta_ex[2:-2]#
         command_r = risposta_ex[:2] #comando 59
-        print ('cmd : ' + command_r)
+        
      		
         tentativi+=1
         if command_r == "59":
@@ -1345,12 +1439,12 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
             label.setStyleSheet("color:green")		
             label.setText("key ok")
             barra.setValue(secondi)
-            print ('key : ' + key)
+            
             self.progressBar.setValue(80)
         else :
            if tentativi==1 :
               
-              print "retry"
+             
               esito=self.get_key(tentativi,prodCode,rlu_type,id_retry,printer_f,online_printer_fail)
            else :
               esito=self.ack_nack(risposta,label,barra,prodCode,rlu_type,id_retry,printer_f,online_printer_fail)
@@ -1390,7 +1484,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
               self.progressBar.setValue(100)
             else :
               if tentativi==1 :
-               print "retry"
+               
                esito=self.test_transceiver(tentativi,prodCode,rlu_type,id_retry,printer_f,online_printer_fail)
               else :
                esito=self.ack_nack("\x15\x08\x00",label,barra,prodCode,rlu_type,id_retry,printer_f,online_printer_fail)
@@ -1398,12 +1492,12 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         else :
             if tentativi==1 :
               
-              print "retry"
+              
               esito=self.test_transceiver(tentativi,prodCode,rlu_type,id_retry,printer_f,online_printer_fail)
             else :
               esito=self.ack_nack(risposta,label,barra,prodCode,rlu_type,id_retry,printer_f,online_printer_fail)
               barra.setValue(secondi)
-        print "esito_tt"+esito   
+           
         return esito
 			
    #torna la corrente che se < 32 considero come NACK
@@ -1439,7 +1533,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
               self.progressBar.setValue(20)
            else :
               if tentativi==1 :
-               print "retry"
+               
                esito=self.misura_corrente_ricarica(tentativi,prodCode,rlu_type,id_retry,printer_f,online_printer_fail)
               else :
                esito=self.ack_nack("\x15\x07\x00",label,barra,prodCode,rlu_type,id_retry,printer_f,online_printer_fail)
@@ -1447,7 +1541,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
              
         else :
            if tentativi==1 :
-              print "retry"
+              
               esito=self.misura_corrente_ricarica(tentativi,prodCode,rlu_type,id_retry,printer_f,online_printer_fail)
            else :
               esito=self.ack_nack(risposta,label,barra,prodCode,rlu_type,id_retry,printer_f,online_printer_fail)
@@ -1527,7 +1621,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 							ser.flushOutput()
 							#write data
 							ser.write(command)
-							print("write data : " + command,)
+							
 							
 							if command =='U\x02\x00': # avvio in concomitanza l'installazione del nuovo FW
 							 label.setText("waiting..")
@@ -1547,7 +1641,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 								if (response!=''):
 								 
 								 resp += response
-								 print ("resp : "+resp,)
+								 
 								 
 								 time.sleep(3)
 								 break
@@ -1592,13 +1686,15 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 
     def return_bytes(self,the_bytes):
      return the_bytes
-
+	 
+	 
+# se gia inserito faccio update altrimenti insert
     def citymonitorDB(self,id_radio,conn_string): 	
      server = 'citymonitoreu.database.windows.net'
      database = 'citymonitor2'
      username = 'citymonitor_dbadmin@citymonitoreu'
      password = 'MonitCityMenoWatt1296'
-     driver= '{ODBC Driver 17 for SQL Server}'
+     driver= '{SQL Server}'
      conn = pyodbc.connect('DRIVER='+driver+';SERVER='+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password)
 
      cursor = conn.cursor()
@@ -1610,14 +1706,21 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
                 VALUES
                 (?,?)
                 '''
-				
-     cursor.execute(query_insert,(id_radio),(conn_string),)
+     query_select = '''select ID from [DevicesLightPointsTemp] where ID=?'''
+     query_update = '''update [DevicesLightPointsTemp] set ID=?,CONN_STRING=? where ID=?'''
 	 
+     
+     cursor.execute(query_select,(id_radio),)  
+     data = cursor.fetchall() 
+	 
+     if data!=[] :
+      cursor.execute(query_update,(id_radio),(conn_string),(id_radio),)  
+     else :
+      cursor.execute(query_insert,(id_radio),(conn_string),)  
+	  
      conn.commit()				
      cursor.close()
      conn.close()
-
-
 
 
 
@@ -1663,14 +1766,55 @@ class MainWindow(QtGui.QMainWindow,Ui_new_old):
         #self.startRluRluB()
 
     def startNewOld(self):
+        
         self.NewOld = NewOld(self)
         self.setWindowTitle("Facere")
         self.setCentralWidget(self.NewOld)
         
-        self.NewOld.NewButton.clicked.connect(self.startRluRluB) # clicco e avvia la finestra di scelta
-        #TODO : cambiare comportamento cioè far inserire in ID o proporlo a video tra quelli FAIL
-        self.NewOld.OldButton.clicked.connect(self.startRluRluB_again) # clicco e avvia la finestra di scelta
-        self.show()
+        try:
+		   #test connessione internet
+         if urllib2.urlopen('http://216.58.192.142', timeout=1) :
+          #test connessione al DB CM 
+          try :
+           
+           #session = ftplib.FTP('94.177.203.9','metering','m3t3r1ng_01')
+           #session.cwd('/Facere/')
+           #file = open('Database\\rluDB.db','rb')
+           #session.storbinary('STOR '+ 'rluDB.db', file)
+           #file.close()
+           #session.quit()
+              
+           rc=os.system("powershell -Command echo ((new-object Net.Sockets.TcpClient).Client.Connect('citymonitoreu.database.windows.net', 1433))") #rc=0->ok,rc=1->ko
+           if rc != 1 :
+            self.NewOld.NewButton.clicked.connect(self.startRluRluB) # clicco e avvia la finestra di scelta
+            self.NewOld.OldButton.clicked.connect(self.startRluRluB_again) # clicco e avvia la finestra di scelta
+            self.show()
+           else :
+            MyApp.createMessageBox(self,"connessione al DB  non riuscita","ERRORE","impossibile avviare Facere")
+            sys.exit(0)
+           
+          except Exception, e :
+           MyApp.createMessageBox(self,"connessione al DB  non riuscita","ERRORE","impossibile avviare Facere")
+           sys.exit(0)
+        except urllib2.URLError as err:
+         MyApp.createMessageBox(self,"connessione internet assente","ERRORE","impossibile avviare Facere")
+         sys.exit(0)
+        
+        		 
+  #def upload_oracolo_false():
+# time.sleep(20) #TBD
+ 
+# with open(path,'w') as file :
+#     file.write('false')
+
+ #session = FTP('94.177.203.9','metering','m3t3r1ng_01')
+ #session.cwd('/'+sys_title+'/')
+ #file = open('oracolo.txt','rb')
+ #session.storbinary('STOR '+ 'oracolo.txt', file)
+ #file.close()
+ #session.quit()
+ #print 'oracolo impostato a -false-'       
+        
 		
 	#torna una lista di ID prelevati dal DB i quali avevano precedetemente fallito il collaudo
     def show_id_for_retry(self,rlu_type): #rlu_type
@@ -1791,6 +1935,9 @@ class MainWindow(QtGui.QMainWindow,Ui_new_old):
         self.printer_f=self.Window.comboBox_z_fail.activated[str].connect(self.onChanged_printer_f)
         self.printer_f=self.Window.comboBox_z_fail.currentText()
 		
+        self.Window.Button_prova_success.clicked.connect(lambda:self.createLabel_test(self.printer_s))
+        self.Window.Button_prova_fail.clicked.connect(lambda:self.createLabelFail_test(self.printer_f))
+		
 		  # #################################### ZEBRA IP CONFIGURATIONS ##############################################
 		  
 		  #spunta sulla checkbox che abilita l'inserimento degli IP  nel DB. Con la checkbox true, online_printer=true
@@ -1886,6 +2033,9 @@ class MainWindow(QtGui.QMainWindow,Ui_new_old):
         self.printer_f=self.Window.comboBox_z_fail_a.activated[str].connect(self.onChanged_printer_f)
         self.printer_f=self.Window.comboBox_z_fail_a.currentText()
 		
+        self.Window.Button_prova_success.clicked.connect(lambda:self.createLabel_test(self.printer_s))
+        self.Window.Button_prova_fail.clicked.connect(lambda:self.createLabelFail_test(self.printer_f))
+		
         # #################################### ZEBRA IP CONFIGURATIONS ##############################################
 		  
 		  #spunta sulla checkbox che abilita l'inserimento degli IP  nel DB. Con la checkbox true, online_printer=true
@@ -1911,20 +2061,184 @@ class MainWindow(QtGui.QMainWindow,Ui_new_old):
         self.show()
 		
 		
-		
-		
-    def getSN(self):
-        self.serialNumberGPT= self.Window.lineEdit_sn.text()
-        try :
-         #int(self.serialNumberGPT)
-         self.Window.label_sn.setStyleSheet('color:green')
-         self.Window.label_sn.setText("seriale idoneo")
-         self.Window.pushButton.setEnabled(True)
-         return self.serialNumberGPT
+    def _output_win(self, commands):
+        #if self.queue == 'zebra_python_unittest':
+            #print commands
+            #return
+        hPrinter = win32print.OpenPrinter(self.queue)
+        print hPrinter
+        try:
+            hJob = win32print.StartDocPrinter(hPrinter, 1, ('Label',None,'RAW'))
+            try:
+                win32print.StartPagePrinter(hPrinter)
+                win32print.WritePrinter(hPrinter, commands)
+                win32print.EndPagePrinter(hPrinter)
+            finally:
+                win32print.EndDocPrinter(hPrinter)
+        finally:
+            win32print.ClosePrinter(hPrinter)
+
+    def output(self, commands):
+        """Output EPL2 commands to the label printer
+
+        commands - EPL2 commands to send to the printer
+        """
+        assert self.queue is not None
+        if sys.version_info[0] == 3:
+            if type(commands) != bytes:
+                commands = str(commands).encode()
+        else:
+            commands = str(commands).encode()
         
+        self._output_win(commands)
+      
+    
+
+#    def _getqueues_win(self):
+#        printers = []
+#        for (a,b,name,d) in win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL):
+#            printers.append(name)
+#        return printers
+
+#    def getqueues(self):
+#        """Returns a list of printer queues on local machine"""
+#        
+#        return self._getqueues_win()
+        
+
+    def setqueue(self, queue):
+        """Set the printer queue"""
+        self.queue = queue
+
+    def setup(self, direct_thermal=None, label_height=None, label_width=None):
+        """Set up the label printer. Parameters are not set if they are None.
+
+        direct_thermal - True if using direct thermal labels
+        label_height   - tuple (label height, label gap) in dots
+        label_width    - in dots
+        """
+        commands = '\n'
+        if direct_thermal:
+            commands += ('OD\n')
+        if label_height:
+           commands += ('Q%s,%s\n'%(label_height[0],label_height[1]))
+        if label_width:
+            commands += ('q%s\n'%label_width)
+        self.output(commands)
+
+    def store_graphic(self, name, filename):
+        """Store a .PCX file on the label printer
+
+        name     - name to be used on printer
+        filename - local filename
+        """
+        assert filename.lower().endswith('.pcx')
+        commands = '\nGK"%s"\n'%name
+        commands += 'GK"%s"\n'%name
+        size = os.path.getsize(filename)
+        commands += 'GM"%s"%s\n'%(name,size)
+        self.output(commands)
+        self.output(open(filename,'rb').read())
+		
+    def createLabel_test(self,printer_s) : 
+	
+        l = zpl.Label(20,40) # coordinate stampa su video
+        height = 0
+        l.origin(2,-2) #-1						#l.origin(1,-1) #-1  
+        l.write_text("PASS_OK", char_height=2, char_width=2, line_width=47) #40
+        l.endorigin()
+ 
+        height += 4
+        image_width = 10 
+        l.origin((l.width-image_width)/2, 1)			#l.origin((l.width-image_width)/1, 0)
+        image_height = l.write_graphic(Image.open(os.path.join(os.path.dirname(zpl.__file__), sys.path[0]+'\dmtx_pass.png')),image_width)
+        l.endorigin()
+
+        height = 0
+        l.origin(2,-4)							#l.origin(0,-3) #-3.3
+        l.write_text(str("00X"), char_height=5, char_width=2, line_width=46) #41
+        l.endorigin()
+
+        height += 3
+        l.origin(0.8, -11)								#l.origin(0, -7.5) #-8
+        l.write_text(str("d7352174db180102"), char_height=3, char_width=2, line_width=59) #60 centrato #50
+        l.endorigin()
+		
+        payload = l.dumpZPL()
+
+        self.setqueue(str(printer_s))	   
+        self.output(payload)
+		
+		
+    def createLabelFail_test(self,printer_f) :
+	
+        
+        l = zpl.Label(50,30) # coordinate stampa su video
+        height = 0
+        
+        serialNumberGPT = "SN000000000"
+		
+        l.origin(5,-6) #-2
+        l.write_text("PASS_KO", char_height=2, char_width=2, line_width=60) #40
+        l.endorigin() 	
+		
+        l.origin(10,-2)
+        l.write_text("FAIL", char_height=3, char_width=2, line_width=60)
+        l.endorigin()
+
+        l.origin(5,-9.7)
+        l.write_text("S/N : "+str(serialNumberGPT), char_height=3, char_width=2, line_width=60)
+        l.endorigin()
+        
+        l.origin(5,-15)
+        l.write_text("DATA ULTIMO COLLAUDO", char_height=3, char_width=2, line_width=60) #41
+        l.endorigin()
+        
+        l.origin(5,-18)
+        l.write_text(str("4/10/2019 - 17:30"), char_height=3, char_width=2, line_width=60)
+        l.endorigin()
+	  
+        l.origin(5,-22)
+        l.write_text("DESCRIZIONE ERRORE", char_height=3, char_width=2, line_width=60) 
+        l.endorigin()
+		
+        l.origin(5,-26)
+        l.write_text(str("rssi out of range"), char_height=3, char_width=2, line_width=60)
+        l.endorigin()
+	
+        l.origin(5,-31)
+        l.write_text("FIRMA COLLAUDATORE", char_height=3, char_width=2, line_width=60) 
+        l.endorigin()
+		
+        l.origin(5,-38)
+        l.write_text("-----------------------------------", char_height=3, char_width=2, line_width=60) 
+        l.endorigin()
+	
+        payload = l.dumpZPL()
+        self.setqueue(str(printer_f))	   
+        self.output(payload)
+
+        
+		
+	#controllo che il seriale non sia vuoto e non sia uguale a quello di un device già collaudato	
+    def getSN(self):
+	     
+        query_seriale = 'SELECT sn_gpt FROM RLU WHERE sn_gpt =?'
+        try :
+         self.serialNumberGPT= self.Window.lineEdit_sn.text()
+         serialeDB=self.select_generica(self,query_seriale,self.serialNumberGPT)
+		 
+         if self.serialNumberGPT != "" and self.serialNumberGPT != serialeDB :
+          self.Window.label_sn.setStyleSheet('color:green')
+          self.Window.label_sn.setText("seriale idoneo")
+          self.Window.pushButton.setEnabled(True)
+          return self.serialNumberGPT
+         else :
+          self.Window.label_sn.setStyleSheet('color:red')
+          self.Window.label_sn.setText("seriale mancante o collaudato")
         except  :
          self.Window.label_sn.setStyleSheet('color:red')
-         self.Window.label_sn.setText("seriale mancante o errato")		
+         self.Window.label_sn.setText("seriale mancante o collaudato")		
          
    #popolo la lista deille stampanti installate sul pc, sopra faccio dei controlli per visualizzare solo le Zebra
     def _getqueues_win(self):
@@ -2028,19 +2342,27 @@ class MainWindow(QtGui.QMainWindow,Ui_new_old):
         
 		 
     def updateIpValues(self) :        
-        ip_ok = self.Window.lineEdit_z_success.text()
-        ip_ko =   self.Window.lineEdit_z_fail.text()
-        
+       ip_ok = self.Window.lineEdit_z_success.text()
+       ip_ko =   self.Window.lineEdit_z_fail.text()
+		
+       try:
         if IP(str(ip_ok)) :
          MyApp.update_table_ip_ok(self,ip_ok)
          self.Window.label_ip_ok.setStyleSheet("color:green")
          self.Window.label_ip_ok.setText('IP aggiornato')
-         
-        
+       except :
+         self.Window.label_ip_ok.setStyleSheet("color:red")
+         self.Window.label_ip_ok.setText('IP non valido')		
+       try : 
         if IP(str(ip_ko)) :
          MyApp.update_table_ip_ko(self,ip_ko)
          self.Window.label_ip_ko.setStyleSheet("color:green")
          self.Window.label_ip_ko.setText('IP aggiornato')
+        
+       except :
+         self.Window.label_ip_ko.setStyleSheet("color:red")
+         self.Window.label_ip_ko.setText('IP non valido')
+         		 
 		 
     def updateIpValues_a(self) :        
         ip_ok = self.Window.lineEdit_z_success_a.text()
@@ -2121,12 +2443,12 @@ class MainWindow(QtGui.QMainWindow,Ui_new_old):
 	  
     def onChanged_printer(self, text):
       self.printer_s = text
-      print self.printer_s
+      
       return self.printer_s
 	  
     def onChanged_printer_f(self, text):
       self.printer_f = text
-      print self.printer_f
+      
       return self.printer_f
 	  
 

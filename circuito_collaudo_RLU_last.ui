@@ -856,6 +856,12 @@
       </disabled>
      </palette>
     </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="autoFillBackground">
      <bool>true</bool>
     </property>
@@ -902,6 +908,12 @@ Collaudo : </string>
        <height>20</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="frame">
       <bool>false</bool>
      </property>
@@ -914,6 +926,12 @@ Collaudo : </string>
        <width>1201</width>
        <height>51</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
      <property name="value">
       <number>0</number>
@@ -974,6 +992,12 @@ Collaudo : </string>
        <height>23</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
     </widget>
     <widget class="QLabel" name="matCol_label">
      <property name="geometry">
@@ -1009,6 +1033,12 @@ Collaudo : </string>
        <height>261</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -1040,6 +1070,12 @@ Collaudo : </string>
        <height>16</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="maximum">
       <number>60</number>
      </property>
@@ -1065,6 +1101,12 @@ Collaudo : </string>
        <height>16</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="maximum">
       <number>20</number>
      </property>
@@ -1080,6 +1122,12 @@ Collaudo : </string>
        <width>811</width>
        <height>16</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
      <property name="maximum">
       <number>50</number>
@@ -1097,6 +1145,12 @@ Collaudo : </string>
        <height>16</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="maximum">
       <number>30</number>
      </property>
@@ -1113,6 +1167,12 @@ Collaudo : </string>
        <height>16</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="maximum">
       <number>30</number>
      </property>
@@ -1128,6 +1188,12 @@ Collaudo : </string>
        <width>811</width>
        <height>16</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
      <property name="toolTip">
       <string/>
@@ -1151,6 +1217,12 @@ Collaudo : </string>
        <height>20</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1163,6 +1235,12 @@ Collaudo : </string>
        <width>341</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
      <property name="text">
       <string/>
@@ -1177,6 +1255,12 @@ Collaudo : </string>
        <height>20</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1189,6 +1273,12 @@ Collaudo : </string>
        <width>341</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
      <property name="text">
       <string/>
@@ -1203,6 +1293,12 @@ Collaudo : </string>
        <height>20</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1216,6 +1312,12 @@ Collaudo : </string>
        <height>20</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -1228,6 +1330,12 @@ Collaudo : </string>
        <width>411</width>
        <height>51</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
      <property name="toolTip">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1327,6 +1435,12 @@ Collaudo : </string>
       <height>21</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
      <string>...</string>
     </property>
@@ -1334,11 +1448,17 @@ Collaudo : </string>
    <widget class="QLabel" name="fileChoose_label">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>20</x>
       <y>60</y>
-      <width>101</width>
+      <width>121</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>Scegli il bootloader : </string>
@@ -1353,6 +1473,12 @@ Collaudo : </string>
       <height>20</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="readOnly">
      <bool>true</bool>
     </property>
@@ -1365,6 +1491,12 @@ Collaudo : </string>
       <width>156</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="standardButtons">
      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
@@ -1823,6 +1955,12 @@ Collaudo : </string>
       <height>16</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
      <string>COM :</string>
     </property>
@@ -1838,6 +1976,12 @@ Collaudo : </string>
       <width>161</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>Test Connection</string>
@@ -1872,15 +2016,27 @@ Collaudo : </string>
       <height>22</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
    </widget>
    <widget class="QLabel" name="fileChoose_label_2">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>20</x>
       <y>110</y>
-      <width>101</width>
+      <width>121</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>Scegli il firmware : </string>
@@ -1894,6 +2050,12 @@ Collaudo : </string>
       <width>156</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="standardButtons">
      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
@@ -1910,6 +2072,12 @@ Collaudo : </string>
       <width>461</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="readOnly">
      <bool>true</bool>
@@ -2365,6 +2533,12 @@ Collaudo : </string>
       <height>21</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
      <string>...</string>
     </property>
@@ -2378,10 +2552,156 @@ Collaudo : </string>
       <height>91</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
      <string>Home</string>
     </property>
    </widget>
+   <widget class="QLineEdit" name="lineEdit_sn">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>970</x>
+      <y>880</y>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Button_sn">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>920</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Elimina</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>880</y>
+      <width>51</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>SN :</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget_3">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>898</x>
+      <y>849</y>
+      <width>291</width>
+      <height>111</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>820</y>
+      <width>451</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>PROBLEMI CON LA STAMPA? ANNULLA IL COLLAUDO INSERENDO IL SERIALE</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_delete">
+    <property name="geometry">
+     <rect>
+      <x>950</x>
+      <y>859</y>
+      <width>181</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <zorder>listWidget_3</zorder>
+   <zorder>groupBox</zorder>
+   <zorder>selectFile_toolButton</zorder>
+   <zorder>fileChoose_label</zorder>
+   <zorder>lineEdit</zorder>
+   <zorder>buttonBox</zorder>
+   <zorder>rightFile_label</zorder>
+   <zorder>COM_label</zorder>
+   <zorder>btn_echo</zorder>
+   <zorder>labelBar_7</zorder>
+   <zorder>COM_edit</zorder>
+   <zorder>fileChoose_label_2</zorder>
+   <zorder>buttonBox_2</zorder>
+   <zorder>lineEdit_2</zorder>
+   <zorder>rightFile_label_2</zorder>
+   <zorder>selectFile_toolButton_2</zorder>
+   <zorder>pushButton_home</zorder>
+   <zorder>lineEdit_sn</zorder>
+   <zorder>Button_sn</zorder>
+   <zorder>label_4</zorder>
+   <zorder>checkBox</zorder>
+   <zorder>label_delete</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">

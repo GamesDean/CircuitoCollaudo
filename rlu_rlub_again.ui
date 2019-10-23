@@ -17,11 +17,17 @@
    <widget class="QLabel" name="label_oggetti">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>320</y>
-      <width>331</width>
+      <x>185</x>
+      <y>250</y>
+      <width>351</width>
       <height>51</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>Seleziona il seriale dell'oggetto da collaudare nuovamente :</string>
@@ -36,15 +42,27 @@
       <height>31</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>189</x>
       <y>100</y>
-      <width>231</width>
+      <width>271</width>
       <height>71</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>Seleziona la tipologia di oggetti da collaudare : </string>
@@ -59,6 +77,12 @@
       <height>91</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
      <string>OK</string>
     </property>
@@ -67,10 +91,16 @@
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>330</y>
+      <y>260</y>
       <width>181</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="maxVisibleItems">
      <number>3000</number>
@@ -79,11 +109,17 @@
    <widget class="QLabel" name="label_error">
     <property name="geometry">
      <rect>
-      <x>820</x>
-      <y>320</y>
-      <width>201</width>
+      <x>790</x>
+      <y>250</y>
+      <width>231</width>
       <height>51</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>Errore precedentemente riscontrato :</string>
@@ -93,10 +129,16 @@
     <property name="geometry">
      <rect>
       <x>1020</x>
-      <y>320</y>
-      <width>221</width>
+      <y>250</y>
+      <width>251</width>
       <height>51</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string/>
@@ -109,9 +151,9 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>470</y>
+      <y>440</y>
       <width>1231</width>
-      <height>241</height>
+      <height>331</height>
      </rect>
     </property>
     <property name="palette">
@@ -180,8 +222,8 @@
     </property>
     <property name="font">
      <font>
-      <weight>50</weight>
-      <bold>false</bold>
+      <weight>75</weight>
+      <bold>true</bold>
       <underline>false</underline>
      </font>
     </property>
@@ -194,11 +236,17 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>990</x>
-       <y>70</y>
+       <x>984</x>
+       <y>109</y>
        <width>211</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
      <property name="readOnly">
       <bool>false</bool>
@@ -210,11 +258,17 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>900</x>
-       <y>180</y>
+       <x>894</x>
+       <y>219</y>
        <width>75</width>
        <height>23</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
      <property name="text">
       <string>OK</string>
@@ -226,8 +280,8 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>700</x>
-       <y>70</y>
+       <x>694</x>
+       <y>109</y>
        <width>281</width>
        <height>20</height>
       </rect>
@@ -269,6 +323,12 @@
        </disabled>
       </palette>
      </property>
+     <property name="font">
+      <font>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="text">
       <string>Inserire indirizzo IP della stampante per SUCCESS :</string>
      </property>
@@ -279,11 +339,17 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>990</x>
-       <y>135</y>
+       <x>984</x>
+       <y>174</y>
        <width>211</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
      <property name="cursor">
       <cursorShape>IBeamCursor</cursorShape>
@@ -298,21 +364,33 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>650</x>
-       <y>20</y>
+       <x>644</x>
+       <y>59</y>
        <width>571</width>
        <height>201</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
     </widget>
     <widget class="QCheckBox" name="checkBox_a">
      <property name="geometry">
       <rect>
-       <x>660</x>
-       <y>37</y>
-       <width>151</width>
+       <x>654</x>
+       <y>76</y>
+       <width>251</width>
        <height>17</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
      <property name="text">
       <string>Utilizzare stampante in rete</string>
@@ -324,8 +402,8 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>700</x>
-       <y>135</y>
+       <x>694</x>
+       <y>174</y>
        <width>281</width>
        <height>20</height>
       </rect>
@@ -367,6 +445,12 @@
        </disabled>
       </palette>
      </property>
+     <property name="font">
+      <font>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="text">
       <string> Inserire indirizzo IP della stampante   per FAIL :</string>
      </property>
@@ -380,6 +464,12 @@
        <height>22</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
     </widget>
     <widget class="QComboBox" name="comboBox_z_success_a">
      <property name="geometry">
@@ -389,6 +479,12 @@
        <width>151</width>
        <height>22</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
     </widget>
     <widget class="QLabel" name="label_z_fail_usb_a">
@@ -436,6 +532,12 @@
         </colorrole>
        </disabled>
       </palette>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
      <property name="text">
       <string>Seleziona la stampante  per FAIL :</string>
@@ -487,6 +589,12 @@
        </disabled>
       </palette>
      </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
       <string>Seleziona la stampante  per SUCCESS :</string>
      </property>
@@ -494,14 +602,125 @@
     <widget class="QCheckBox" name="checkBox_2_a">
      <property name="geometry">
       <rect>
-       <x>660</x>
-       <y>103</y>
-       <width>151</width>
+       <x>654</x>
+       <y>142</y>
+       <width>241</width>
        <height>17</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
       <string>Utilizzare stampante in rete</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_z_success_usb_2">
+     <property name="geometry">
+      <rect>
+       <x>48</x>
+       <y>272</y>
+       <width>1141</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>0</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>127</red>
+           <green>127</green>
+           <blue>127</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+     <property name="font">
+      <font>
+       <family>MS Shell Dlg 2</family>
+       <pointsize>8</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+       <underline>true</underline>
+       <strikeout>false</strikeout>
+       <kerning>false</kerning>
+      </font>
+     </property>
+     <property name="text">
+      <string>EFFETTUARE SEMPRE UNA PROVA DI STAMPA OGNI QUALVOLTA SI ACCENDA/SPENGA LA STAMPANTE. PER VERIFICARE LA CORRETTA FORMATTAZIONE DELLE ETICHETTE, AVVIARE &quot;ZEBRA SETUP UTILITIES&quot;</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Button_prova_success">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>31</x>
+       <y>170</y>
+       <width>511</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Stampa etichetta di prova SUCCESS</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Button_prova_fail">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>230</y>
+       <width>511</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Stampa etichetta di prova FAIL</string>
      </property>
     </widget>
     <zorder>listWidget_2</zorder>
@@ -516,15 +735,24 @@
     <zorder>label_z_success_usb_a</zorder>
     <zorder>label_z_fail_usb_a</zorder>
     <zorder>checkBox_2_a</zorder>
+    <zorder>label_z_success_usb_2</zorder>
+    <zorder>Button_prova_success</zorder>
+    <zorder>Button_prova_fail</zorder>
    </widget>
    <widget class="QLabel" name="label_codprod">
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>390</y>
-      <width>121</width>
+      <y>370</y>
+      <width>141</width>
       <height>51</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string/>
@@ -534,10 +762,16 @@
     <property name="geometry">
      <rect>
       <x>390</x>
-      <y>390</y>
+      <y>370</y>
       <width>121</width>
       <height>51</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>Seriale MenowattGe :</string>
