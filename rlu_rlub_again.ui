@@ -69,6 +69,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>530</x>
@@ -775,6 +778,89 @@
     </property>
     <property name="text">
      <string>Seriale MenowattGe :</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget_5">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>789</x>
+      <y>13</y>
+      <width>471</width>
+      <height>141</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Button_nome">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>990</x>
+      <y>113</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>OK</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_nome_cognome">
+    <property name="geometry">
+     <rect>
+      <x>1090</x>
+      <y>50</y>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_nome_cognome">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>39</y>
+      <width>261</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Inserire  Nome e Cognome del collaudatore : </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_sn_5">
+    <property name="geometry">
+     <rect>
+      <x>1090</x>
+      <y>19</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
